@@ -3,30 +3,56 @@ package dev.davi.itau_transactions_api.Transacoes;
 import org.springframework.stereotype.Repository;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class TransacoesRepository {
-    private List<Transacao> transacaoList = new ArrayList<>();
+    private Map<UUID, Transacao> transacaoMap = new HashMap<>();
 
-    public void save(Transacao transacao) {
-        transacaoList.add(transacao);
+    public Transacao save(Transacao t) {
+        Transacao transacao = new Transacao();
+        transacao.setId(UUID.randomUUID());
+        transacao.setValor(t.getValor());
+        transacao.setDataHora(t.getDataHora());
+        transacaoMap.put(transacao.getId(), transacao);
+
+        return transacao;
     }
 
-    public Transacao editar(int id, Transacao transacao) {
-        return transacaoList.set(id, transacao);
+    public Transacao editar(UUID id, Transacao transacao) {
+        return transacaoMap.replace(id, transacao);
     }
 
     public List<Transacao> findAll() {
-        return new ArrayList<>(transacaoList);
+        return new ArrayList<>(transacaoMap.values());
     }
 
-    public void delete(int id) {
-        transacaoList.remove(id);
+    public Transacao findUn(UUID id) {
+        return transacaoMap.get(id);
+    }
+
+    public void delete(UUID id) {
+        transacaoMap.remove(id);
     }
 
     public void clearAll() {
-        transacaoList.clear();
+       transacaoMap.clear();
+    }
+
+    public List<Map.Entry<UUID, Transacao>> findByTime() {
+        List<Map.Entry<UUID, Transacao>> list = new ArrayList<>();
+        for (Map.Entry<UUID, Transacao> transacoes : transacaoMap.entrySet()) {
+            if (transacaoMap.get(transacoes.getKey()).getDataHora().isBefore(LocalDateTime.now().plusSeconds(-60))) {
+                list.add(transacoes);
+            }
+        }
+        return list;
     }
 }
