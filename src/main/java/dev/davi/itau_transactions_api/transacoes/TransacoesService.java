@@ -1,14 +1,12 @@
-package dev.davi.itau_transactions_api.Transacoes;
+package dev.davi.itau_transactions_api.transacoes;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -19,13 +17,10 @@ public class TransacoesService {
     }
 
     public Transacao criarTransacao(TransacaoRequestDTO t) {
+        if (t.dataHora().isAfter(LocalDateTime.now()) || t.valor() < 0) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
         Transacao transacao = new Transacao();
-        if (t.dataHora().isAfter(LocalDateTime.now())) {
-            new ResponseEntity<>(HttpStatus.UNPROCESSABLE_CONTENT);
-        }
-        if (t.valor() < 0) {
-            new ResponseEntity<>(HttpStatus.UNPROCESSABLE_CONTENT);
-        }
         transacao.setValor(t.valor());
         transacao.setDataHora(t.dataHora());
         return repository.save(transacao);
@@ -37,6 +32,13 @@ public class TransacoesService {
 
     public Transacao mostrarTransacao(UUID id) {
         return repository.findUn(id);
+    }
+
+    public void delete(UUID id) {
+        if (repository.findUn(id) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        repository.delete(id);
     }
 
     public void deletarTodasTransacoes() {

@@ -1,4 +1,4 @@
-package dev.davi.itau_transactions_api.Transacoes;
+package dev.davi.itau_transactions_api.transacoes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Transacao {
     private UUID id;
-    private double valor;
+    private Double valor;
     private LocalDateTime dataHora;
 }
