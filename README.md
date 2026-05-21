@@ -289,20 +289,20 @@ Implementar qualquer um desses pode destacar sua candidatura:
 ## 📝 Checklist de Implementação
 
 ### Fase 1: Setup
-- [ ] Criar projeto Spring Boot 4.0.1
-- [ ] Adicionar dependências (Spring Web, Lombok)
-- [ ] Estruturar pacotes
+- [x] Criar projeto Spring Boot 4.0.1
+- [x] Adicionar dependências (Spring Web, Lombok)
+- [x] Estruturar pacotes
 
 ### Fase 2: Endpoints
-- [ ] Implementar POST `/transacao` com validações
-- [ ] Implementar DELETE `/transacao`
-- [ ] Implementar GET `/estatistica`
+- [x] Implementar POST `/transacao` com validações
+- [x] Implementar DELETE `/transacao`
+- [x] Implementar GET `/estatistica`
 
 ### Fase 3: Lógica
-- [ ] Armazenar transações em memória
-- [ ] Calcular estatísticas dos últimos 60s
-- [ ] Validar datas (não futuro, formato correto)
-- [ ] Validar valores (não negativo)
+- [x] Armazenar transações em memória
+- [x] Calcular estatísticas dos últimos 60s
+- [x] Validar datas (não futuro, formato correto)
+- [x] Validar valores (não negativo)
 
 ### Fase 4: Testes
 - [ ] Testes unitários para Services
@@ -310,7 +310,7 @@ Implementar qualquer um desses pode destacar sua candidatura:
 - [ ] Testes de validação
 
 ### Fase 5: Polish
-- [ ] Configurar `application.yml`
+- [x] Configurar `application.yml`
 - [ ] Adicionar Swagger/OpenAPI
 - [ ] Logs estruturados
 - [ ] README com instruções
