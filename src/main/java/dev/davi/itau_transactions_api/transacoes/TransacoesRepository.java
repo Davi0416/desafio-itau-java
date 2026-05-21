@@ -1,18 +1,26 @@
 package dev.davi.itau_transactions_api.transacoes;
 
 import org.springframework.stereotype.Repository;
+import tools.jackson.databind.cfg.MapperBuilder;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class TransacoesRepository {
+    private final MapperBuilder mapperBuilder;
     private Map<UUID, Transacao> transacaoMap = new HashMap<>();
+
+    public TransacoesRepository(MapperBuilder mapperBuilder) {
+        this.mapperBuilder = mapperBuilder;
+    }
 
     public Transacao save(Transacao t) {
         Transacao transacao = new Transacao();
@@ -44,13 +52,10 @@ public class TransacoesRepository {
        transacaoMap.clear();
     }
 
-    public List<Map.Entry<UUID, Transacao>> findByTime() {
-        List<Map.Entry<UUID, Transacao>> list = new ArrayList<>();
-        for (Map.Entry<UUID, Transacao> transacoes : transacaoMap.entrySet()) {
-            if (transacaoMap.get(transacoes.getKey()).getDataHora().isBefore(LocalDateTime.now().plusSeconds(-60))) {
-                list.add(transacoes);
-            }
-        }
-        return list;
+    public List<Transacao> findByTime() {
+        return new ArrayList<>(transacaoMap.values()).stream()
+                .filter(t -> t.getDataHora().isAfter(LocalDateTime.now().minusSeconds(60)))
+                .sorted(Comparator.comparing(Transacao::getDataHora))
+                .toList();
     }
 }

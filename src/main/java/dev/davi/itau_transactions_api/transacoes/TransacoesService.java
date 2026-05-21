@@ -18,7 +18,7 @@ public class TransacoesService {
 
     public Transacao criarTransacao(TransacaoRequestDTO t) {
         if (t.dataHora().isAfter(LocalDateTime.now()) || t.valor() < 0) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_CONTENT);
         }
         Transacao transacao = new Transacao();
         transacao.setValor(t.valor());
@@ -42,6 +42,9 @@ public class TransacoesService {
     }
 
     public void deletarTodasTransacoes() {
+        if (repository.findAll().isEmpty()) {
+            throw new ResponseStatusException((HttpStatus.NO_CONTENT));
+        }
         repository.clearAll();
     }
 }

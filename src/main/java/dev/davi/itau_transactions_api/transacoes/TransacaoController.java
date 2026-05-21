@@ -38,4 +38,10 @@ public class TransacaoController {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/transacao")
+    public ResponseEntity<Void> deleteAll() {
+        service.deletarTodasTransacoes();
+        return ResponseEntity.ok().build();
+    }
 }
