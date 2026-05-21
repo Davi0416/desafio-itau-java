@@ -3,7 +3,9 @@ package dev.davi.itau_transactions_api.services;
 import dev.davi.itau_transactions_api.models.Estatistica;
 import dev.davi.itau_transactions_api.models.Transacao;
 import dev.davi.itau_transactions_api.repositories.TransacoesRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class EstatisticasService {
@@ -15,6 +17,10 @@ public class EstatisticasService {
     }
 
     public Estatistica showInTime() {
+        if (repository.findByTime().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        }
+
         Estatistica estatistica = new Estatistica();
         var transacoes = repository.findByTime();
         var stats = transacoes.stream()

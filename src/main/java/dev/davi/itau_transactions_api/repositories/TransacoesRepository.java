@@ -17,7 +17,7 @@ public class TransacoesRepository {
     @Value("${estatistica.segundos}")
     Integer segundos;
 
-    private Map<UUID, Transacao> transacaoMap = new HashMap<>();
+    private final Map<UUID, Transacao> transacaoMap = new HashMap<>();
 
     public Transacao save(Transacao t) {
         Transacao transacao = new Transacao();
@@ -25,7 +25,6 @@ public class TransacoesRepository {
         transacao.setValor(t.getValor());
         transacao.setDataHora(t.getDataHora());
         transacaoMap.put(transacao.getId(), transacao);
-
         return transacao;
     }
 
