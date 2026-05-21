@@ -1,5 +1,8 @@
-package dev.davi.itau_transactions_api.transacoes;
+package dev.davi.itau_transactions_api.controllers;
 
+import dev.davi.itau_transactions_api.dto.TransacaoRequestDTO;
+import dev.davi.itau_transactions_api.models.Transacao;
+import dev.davi.itau_transactions_api.services.TransacoesService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

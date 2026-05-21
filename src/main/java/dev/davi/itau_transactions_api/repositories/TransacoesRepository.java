@@ -1,8 +1,8 @@
-package dev.davi.itau_transactions_api.transacoes;
+package dev.davi.itau_transactions_api.repositories;
 
+import dev.davi.itau_transactions_api.models.Transacao;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import tools.jackson.databind.cfg.MapperBuilder;
-
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,16 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Repository
 public class TransacoesRepository {
-    private final MapperBuilder mapperBuilder;
-    private Map<UUID, Transacao> transacaoMap = new HashMap<>();
+    @Value("${estatistica.segundos}")
+    Integer segundos;
 
-    public TransacoesRepository(MapperBuilder mapperBuilder) {
-        this.mapperBuilder = mapperBuilder;
-    }
+    private Map<UUID, Transacao> transacaoMap = new HashMap<>();
 
     public Transacao save(Transacao t) {
         Transacao transacao = new Transacao();
@@ -49,12 +46,12 @@ public class TransacoesRepository {
     }
 
     public void clearAll() {
-       transacaoMap.clear();
+        transacaoMap.clear();
     }
 
     public List<Transacao> findByTime() {
         return new ArrayList<>(transacaoMap.values()).stream()
-                .filter(t -> t.getDataHora().isAfter(LocalDateTime.now().minusSeconds(60)))
+                .filter(t -> t.getDataHora().isAfter(LocalDateTime.now().minusSeconds(segundos)))
                 .sorted(Comparator.comparing(Transacao::getDataHora))
                 .toList();
     }

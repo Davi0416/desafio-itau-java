@@ -1,13 +1,15 @@
-package dev.davi.itau_transactions_api.estatisticas;
+package dev.davi.itau_transactions_api.services;
 
-import dev.davi.itau_transactions_api.transacoes.Transacao;
-import dev.davi.itau_transactions_api.transacoes.TransacoesRepository;
+import dev.davi.itau_transactions_api.models.Estatistica;
+import dev.davi.itau_transactions_api.models.Transacao;
+import dev.davi.itau_transactions_api.repositories.TransacoesRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EstatisticasService {
 
     final TransacoesRepository repository;
+
     public EstatisticasService(TransacoesRepository transacoesRepository) {
         this.repository = transacoesRepository;
     }

@@ -1,4 +1,4 @@
-package dev.davi.itau_transactions_api.estatisticas;
+package dev.davi.itau_transactions_api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

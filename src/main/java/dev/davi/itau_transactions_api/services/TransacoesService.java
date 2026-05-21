@@ -1,7 +1,9 @@
-package dev.davi.itau_transactions_api.transacoes;
+package dev.davi.itau_transactions_api.services;
 
+import dev.davi.itau_transactions_api.dto.TransacaoRequestDTO;
+import dev.davi.itau_transactions_api.models.Transacao;
+import dev.davi.itau_transactions_api.repositories.TransacoesRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Service
 public class TransacoesService {
     final TransacoesRepository repository;
+
     public TransacoesService(TransacoesRepository transacoesRepository) {
         this.repository = transacoesRepository;
     }
@@ -30,10 +33,6 @@ public class TransacoesService {
         return repository.findAll();
     }
 
-    public Transacao mostrarTransacao(UUID id) {
-        return repository.findUn(id);
-    }
-
     public void delete(UUID id) {
         if (repository.findUn(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -43,7 +42,7 @@ public class TransacoesService {
 
     public void deletarTodasTransacoes() {
         if (repository.findAll().isEmpty()) {
-            throw new ResponseStatusException((HttpStatus.NO_CONTENT));
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
         repository.clearAll();
     }

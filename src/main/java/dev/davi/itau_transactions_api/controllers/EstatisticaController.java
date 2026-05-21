@@ -1,7 +1,7 @@
-package dev.davi.itau_transactions_api.estatisticas;
+package dev.davi.itau_transactions_api.controllers;
 
-import dev.davi.itau_transactions_api.transacoes.Transacao;
-import org.springframework.beans.factory.annotation.Autowired;
+import dev.davi.itau_transactions_api.models.Estatistica;
+import dev.davi.itau_transactions_api.services.EstatisticasService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
