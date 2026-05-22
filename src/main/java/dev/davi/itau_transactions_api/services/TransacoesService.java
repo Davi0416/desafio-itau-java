@@ -3,6 +3,8 @@ package dev.davi.itau_transactions_api.services;
 import dev.davi.itau_transactions_api.dto.TransacaoRequestDTO;
 import dev.davi.itau_transactions_api.models.Transacao;
 import dev.davi.itau_transactions_api.repositories.TransacoesRepository;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,10 +15,11 @@ import java.util.UUID;
 
 @Service
 public class TransacoesService {
+
     final TransacoesRepository repository;
 
-    public TransacoesService(TransacoesRepository transacoesRepository) {
-        this.repository = transacoesRepository;
+    public TransacoesService(TransacoesRepository repository) {
+        this.repository = repository;
     }
 
     public Transacao criarTransacao(TransacaoRequestDTO t) {
